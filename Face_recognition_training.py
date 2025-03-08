@@ -121,7 +121,10 @@ def train():
 
 
     if test_acc >= min_test_accuracy:
-        model.save(r"./model/face_recognition_model.h5")
+        model_dir = r"./model"
+        if not os.path.exists(model_dir):
+            os.makedirs(model_dir)
+        model.save(os.path.join(model_dir, "face_recognition_model.h5"))
         print('The model is saved！')
     else:
         print('The accuracy of the model did not reach 90%。')

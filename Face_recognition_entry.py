@@ -202,21 +202,29 @@ def entry():
         name = input("Please enter a name：")
         num_samples = int(input("Please enter the number of faces you want to capture："))
 
-        if not os.path.exists(fr"./photo/data/{name}"):
-            os.makedirs(fr"./photo/data/{name}")
+        directories = [
+            fr"./photo/data/{name}",
+            r"./photo/new_data",
+            fr"./photo/new_data/{name}",
+            fr"./photo/new_data/train_data_dir/{name}",
+            fr"./photo/new_data/val_data_dir/{name}",
+            fr"./photo/new_data/test_data_dir/{name}"
+        ]
+
+        for directory in directories:
+            if not os.path.exists(directory):
+                os.makedirs(directory)
 
         collect_faces(name, num_samples)
 
         dataset_dir = r"./photo/data"
         output_dir = r"./photo/new_data"
-        yuchuli(dataset_dir,output_dir)
+        yuchuli(dataset_dir, output_dir)
 
         source_dir = fr"./photo/new_data/{name}"
-
         train_data_dir = fr"./photo/new_data/train_data_dir/{name}"
         val_data_dir = fr"./photo/new_data/val_data_dir/{name}"
         test_data_dir = fr"./photo/new_data/test_data_dir/{name}"
-
 
         split_data(source_dir, train_data_dir, val_data_dir, test_data_dir)
 
